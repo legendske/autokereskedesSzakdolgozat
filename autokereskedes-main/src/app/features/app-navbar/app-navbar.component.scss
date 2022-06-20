@@ -1,0 +1,20 @@
+.menu-spacer {
+  flex: 1 1 auto;
+}
+
+.title {
+  margin-right: 10px;
+}
+
+.mat-raised-button {
+  margin-left: 10px;
+}
+
+a {
+  &.active {
+    ::ng-deep .mat-button-focus-overlay {
+      background-color: #fff;
+      opacity: 0.1;
+    }
+  }
+}

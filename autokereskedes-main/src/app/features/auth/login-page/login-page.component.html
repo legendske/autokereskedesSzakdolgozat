@@ -1,0 +1,22 @@
+<div class="background">
+  <div class="login-container">
+    <div class="text-container">
+      <h1>Kedves Látogató!</h1>
+      <p>
+        Szeretne létrehozni egy fiókot, hogy hozzáférjen ehhez a fantasztikus
+        alkalmazáshoz? Csak kattintson az alábbi gombra!
+      </p>
+      <button mat-raised-button color="primary" routerLink="/auth/registration">
+        Regisztráció
+      </button>
+    </div>
+    <div class="form-container">
+      <h1>Bejelentkezés</h1>
+      <button mat-raised-button color="accent" (click)="loginWithGoogle()">
+        Google fiók használatával
+      </button>
+      <h5>Vagy e-mail cím segítségével</h5>
+      <user-form (formData)="login($event)"></user-form>
+    </div>
+  </div>
+</div>

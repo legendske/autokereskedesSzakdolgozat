@@ -1,0 +1,41 @@
+<section class="advertisement-list">
+  <mat-card *ngFor="let advertisement of advertisements">
+    <mat-card-header>
+      <mat-card-title>{{ advertisement.title }}</mat-card-title>
+      <mat-card-subtitle>{{ advertisement.vehicle?.brand }} {{advertisement.vehicle?.model}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+    <div class="image-wrapper">
+      <img
+        *ngIf="advertisement.image"
+        mat-card-image
+        src="{{advertisement.image}}"
+      />
+      <img
+        *ngIf="!advertisement.image"
+        mat-card-image
+        src="../../../assets/images/vehicle.jpg"
+      />
+    </div>
+    <div class="details">
+      <mat-icon>date_range</mat-icon><span>{{advertisement.vehicle?.year ?? 'N/A'}}</span>
+      <mat-icon>ev_station</mat-icon><span>{{advertisement.vehicle?.fuelType ?? 'N/A'}}</span>
+      <mat-icon>color_lens</mat-icon><span>{{advertisement.vehicle?.color ?? 'N/A'}}</span>
+      <mat-icon>perm_data_setting</mat-icon>
+      <span *ngIf="advertisement.vehicle?.cylinderCapacity">{{advertisement.vehicle?.cylinderCapacity}} ccm</span>
+      <span *ngIf="!advertisement.vehicle?.cylinderCapacity">N/A</span>
+    </div>
+    <div class="details">
+      <mat-icon style="width: 15px;">attach_money</mat-icon><span class="price">{{advertisement.price}} Ft</span>
+    </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" class="open-dialog-button" (click)="openAdvertisementDialog(advertisement)">Részletek</button>
+      <ng-container *ngIf="user && user.uid === advertisement.userId">
+        <button *ngIf="!advertisement.isActive" mat-icon-button color="primary" (click)="openUpdateStateConfirmDialog(advertisement.id, true)" title="Inaktív"><mat-icon>visibility_off</mat-icon></button>
+        <button *ngIf="advertisement.isActive" mat-icon-button color="primary" (click)="openUpdateStateConfirmDialog(advertisement.id, false)" title="Aktív"><mat-icon>visibility</mat-icon></button>
+        <button mat-icon-button color="primary" (click)="openDeleteConfirmDialog(advertisement.id)" title="Törlés"><mat-icon>delete</mat-icon></button>
+      </ng-container>
+    </mat-card-actions>
+  </mat-card>
+</section>

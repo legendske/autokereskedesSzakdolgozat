@@ -1,0 +1,13 @@
+<advertisement-filter
+    [vehicleTypeOptions]="vehicleTypeOptions"
+    [vehicleBrandOptions]="vehicleBrandOptions"
+    [vehicleConditionOptions]="vehicleConditionOptions"
+    [vehicleColorOptions]="vehicleColorOptions"
+    [fuelTypesOptions]="fuelTypesOptions"
+    (onFilter)="onFilter($event)"
+></advertisement-filter>
+<advertisement-list *ngIf="(advertisements$ | async)?.length"
+    [advertisements]="advertisements$ | async" 
+    [user]="user"
+></advertisement-list>
+<mat-spinner *ngIf="!(advertisements$ | async)"></mat-spinner>

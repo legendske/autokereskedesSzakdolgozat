@@ -1,0 +1,22 @@
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field class="form-control">
+    <mat-label>E-mail cím</mat-label>
+    <input matInput formControlName="email" type="text" required autocomplete="off"/>
+    <mat-error *ngIf="email?.hasError('required')">
+      Kérem adja meg e-mail címét.
+    </mat-error>
+    <mat-error *ngIf="email?.hasError('email')">
+      A megadott e-mail cím nem érvényes.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="form-control">
+    <mat-label>Jelszó</mat-label>
+    <input matInput formControlName="password" type="password" required autocomplete="off"/>
+    <mat-error *ngIf="password?.hasError('required')">
+      Kérem adja meg jelszavát.
+    </mat-error>
+  </mat-form-field>
+  <div class="form-footer">
+    <button mat-raised-button color="accent" type="submit" [disabled]="!form.valid">Tovább</button>
+  </div>
+</form>

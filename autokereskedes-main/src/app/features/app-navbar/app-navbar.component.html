@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+  <h1 class="title">Autókereskedés</h1>
+    <a mat-button routerLink="/home" routerLinkActive="active"> Főoldal </a>
+    <a *ngIf="user" mat-button routerLink="/user/advertisement" routerLinkActive="active"> Hírdetéseim </a>
+    <a *ngIf="user" mat-raised-button color="accent" (click)="openAdvertisementDialog()"><mat-icon>add_circle_outline</mat-icon> Hírdetésfeladás </a>
+  <span class="menu-spacer"></span>
+  <ng-container *ngIf="!user">
+    <a mat-button routerLink="/auth/login"> Bejelentkezés </a>
+  </ng-container>
+  <ng-container *ngIf="user">
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+      {{ profile?.displayName || user.email }}
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openProfileDialog()"><mat-icon>account_circle</mat-icon>Profilom</button>
+      <button mat-menu-item *ngIf="hasPassword" (click)="openPasswordDialog()"><mat-icon>vpn_key</mat-icon>Jelszómódosítás</button>
+      <button mat-menu-item routerLink="/user/advertisement"><mat-icon>list</mat-icon>Hírdetéseim</button>
+      <button mat-menu-item (click)="openAdvertisementDialog()"><mat-icon>library_add</mat-icon>Hírdetésfeladás</button>
+      <button mat-menu-item (click)="logout()"><mat-icon>power_off</mat-icon>Kijelentkezés</button>
+    </mat-menu>
+  </ng-container>
+</mat-toolbar>

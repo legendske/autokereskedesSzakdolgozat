@@ -1,0 +1,67 @@
+<div class="background">
+  <div class="profile-container">
+    <div class="form-container">
+      <h1>Profilom</h1>
+      <form class="form" [formGroup]="profileForm" (ngSubmit)="onProfileFormSubmit()">
+        <mat-form-field class="form-control">
+          <mat-label>Név</mat-label>
+          <input
+            matInput
+            formControlName="displayName"
+            type="text"
+          />
+        </mat-form-field>
+        <mat-form-field class="form-control">
+          <mat-label>Telefonszám</mat-label>
+          <input
+            matInput
+            formControlName="phoneNumber"
+            type="text"
+          />
+        </mat-form-field>
+        <div class="form-footer">
+          <button mat-raised-button color="accent" type="submit">Mentés</button>
+        </div>
+      </form>
+    </div>
+    <div class="form-container">
+      <h1>Jelszóváltoztatás</h1>     
+      <form class="form" [formGroup]="passwordForm" (ngSubmit)="onPasswordFormSubmit()">
+        <mat-form-field class="form-control">
+          <mat-label>Jelszó</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            type="password"
+            required
+            minlength="6"
+          />
+          <mat-error *ngIf="password?.hasError('required')">
+            Kötelező mező.
+          </mat-error>
+          <mat-error *ngIf="password?.hasError('minlength')">
+            A Jelszó minimum 6 karakter hosszúságú.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-control">
+          <mat-label>Jelszó újra</mat-label>
+          <input
+            matInput
+            formControlName="confirmPassword"
+            type="password"
+            required
+          />
+          <mat-error *ngIf="confirmPassword?.hasError('required')">
+            Kötelező mező.
+          </mat-error>
+          <mat-error *ngIf="confirmPassword?.hasError('matchPassword')">
+            A megadott jelszavak nem egyeznek.
+          </mat-error>
+        </mat-form-field>
+        <div class="form-footer">
+          <button mat-raised-button color="accent" type="submit" [disabled]="!passwordForm.valid">Mentés</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

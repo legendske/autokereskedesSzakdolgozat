@@ -1,0 +1,18 @@
+<div class="background">
+  <div class="login-container">
+    <div class="form-container">
+      <h1>Regisztráció</h1>
+      <h5>Regisztráció e-mail címmel</h5>
+      <user-form (formData)="register($event)"></user-form>
+    </div>
+    <div class="text-container">
+      <h1>Kedves Látogató!</h1>
+      <p>
+        Amennyiben már rendelkezik felhasználói fiókkal, kérem jelentkezzen be.
+      </p>
+      <button mat-raised-button color="primary" routerLink="/auth/login">
+        Bejelentkezés
+      </button>
+    </div>
+  </div>
+</div>

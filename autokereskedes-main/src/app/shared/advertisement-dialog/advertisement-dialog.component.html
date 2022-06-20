@@ -1,0 +1,253 @@
+<h1 *ngIf="!data.advertisement" mat-dialog-title>Hírdetésfeladás</h1>
+<h1 *ngIf="data.advertisement" mat-dialog-title>Hírdetés</h1>
+<mat-icon class="profile-icon" *ngIf="!data.user && data.profile" title="{{data.profile?.displayName}}&#013;{{data.profile?.phoneNumber}}">phone</mat-icon>
+<div class="form" mat-dialog-content [formGroup]="form">
+  <div class="content-wrapper">
+    <ng-container *ngIf="hasPermission">
+      <input
+        [hidden]="true"
+        name="imageUrl"
+        type="file"
+        accept="image/*"
+        (change)="handleImageInputChange($event)"
+        #file
+      />
+      <button class="img-upload"
+        mat-icon-button
+        color="primary"
+        (click)="file.click()"
+        title="Képfeltöltés"
+      >
+        <mat-icon>cloud_upload</mat-icon>
+      </button>
+    </ng-container>
+    <div class="image-wrapper">
+      <img *ngIf="image?.value" class="main-image" [src]="image?.value" />
+      <img
+        *ngIf="!image?.value"
+        class="main-image"
+        src="../../../assets/images/vehicle.jpg"
+      />
+    </div>
+    <div class="data-wrapper">
+      <div class="row">
+        <mat-form-field class="form-control" appearance="fill">
+          <mat-label>Adatlap címe</mat-label>
+          <input
+            matInput
+            formControlName="title"
+            type="text"
+            autocomplete="off"
+            required
+          />
+          <mat-error *ngIf="title?.hasError('required')">
+            Kötelező mező.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-control" appearance="fill">
+          <mat-label>Ár (Ft)</mat-label>
+          <input
+            matInput
+            formControlName="price"
+            type="number"
+            autocomplete="off"
+            required
+          />
+          <mat-error *ngIf="price?.hasError('required')">
+            Kötelező mező.
+          </mat-error>
+          <mat-error *ngIf="price?.hasError('maxlength')">
+            Az ár maximum 7 karakter hosszúságú.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field class="form-control" appearance="fill">
+        <mat-label>Leírás</mat-label>
+        <textarea
+          rows="6"
+          matInput
+          formControlName="description"
+          autocomplete="off"
+          type="text"
+          style="resize: none"
+        ></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+  <p>Jármű adatok</p>
+  <ng-container formGroupName="vehicle">
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Kivitel</mat-label>
+        <mat-select formControlName="typeId">
+          <mat-option
+            *ngFor="let vehicleTypeOption of vehicleTypeOptions"
+            value="{{ vehicleTypeOption.id }}"
+            >{{ vehicleTypeOption.value }}</mat-option
+          >
+        </mat-select>
+        <mat-error *ngIf="typeId?.hasError('required')">
+          Kötelező mező.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Márka</mat-label>
+        <mat-select formControlName="brandId">
+          <mat-option
+            *ngFor="let vehicleBrandOption of vehicleBrandOptions"
+            value="{{ vehicleBrandOption.id }}"
+            >{{ vehicleBrandOption.value }}</mat-option
+          >
+        </mat-select>
+        <mat-error *ngIf="brandId?.hasError('required')">
+          Kötelező mező.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-control" appearance="fill">
+        <mat-label>Modell</mat-label>
+        <input
+          matInput
+          formControlName="model"
+          type="text"
+          autocomplete="off"
+          required
+        />
+        <mat-error *ngIf="model?.hasError('required')">
+          Kötelező mező.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-control" appearance="fill">
+        <mat-label>Évjárat</mat-label>
+        <input
+          matInput
+          formControlName="year"
+          type="number"
+          autocomplete="off"
+          required
+        />
+        <mat-error *ngIf="year?.hasError('required')">
+          Kötelező mező.
+        </mat-error>
+        <mat-error *ngIf="year?.hasError('maxlength')">
+          Az évjárat maximum 4 karakter hosszúságú.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Szín</mat-label>
+        <mat-select formControlName="colorId">
+          <mat-option
+            *ngFor="let vehicleColorOption of vehicleColorOptions"
+            value="{{ vehicleColorOption.id }}"
+            >{{ vehicleColorOption.value }}</mat-option
+          >
+        </mat-select>
+        <mat-error *ngIf="colorId?.hasError('required')">
+          Kötelező mező.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Állapot</mat-label>
+        <mat-select formControlName="conditionId">
+          <mat-option
+            *ngFor="let vehicleConditionOption of vehicleConditionOptions"
+            value="{{ vehicleConditionOption.id }}"
+            >{{ vehicleConditionOption.value }}</mat-option
+          >
+        </mat-select>
+        <mat-error *ngIf="conditionId?.hasError('required')">
+          Kötelező mező.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-control" appearance="fill">
+        <mat-label>Ajtók száma</mat-label>
+        <input
+          matInput
+          formControlName="numberOfDoors"
+          type="number"
+          autocomplete="off"
+        />
+        <mat-error *ngIf="numberOfDoors?.hasError('maxlength')">
+          Az ajtók száma maximum 2 karakter hosszúságú.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-control" appearance="fill">
+        <mat-label>Ülések száma</mat-label>
+        <input
+          matInput
+          formControlName="numberOfSeats"
+          type="number"
+          autocomplete="off"
+        />
+        <mat-error *ngIf="numberOfSeats?.hasError('maxlength')">
+          Az ülések száma maximum 2 karakter hosszúságú.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="form-control" appearance="fill">
+        <mat-label>Km. óra (km)</mat-label>
+        <input
+          matInput
+          formControlName="numberOfKilometers"
+          type="number"
+          autocomplete="off"
+        />
+        <mat-error *ngIf="numberOfKilometers?.hasError('maxlength')">
+          Az km. óra maximum 6 karakter hosszúságú.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Üzemanyag</mat-label>
+        <mat-select formControlName="fuelTypeId">
+          <mat-option
+            *ngFor="let fuelTypesOption of fuelTypesOptions"
+            value="{{ fuelTypesOption.id }}"
+            >{{ fuelTypesOption.value }}</mat-option
+          >
+        </mat-select>
+        <mat-error *ngIf="fuelTypeId?.hasError('required')">
+          Kötelező mező.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-control" appearance="fill">
+        <mat-label>Hengerűrtartalom (ccm)</mat-label>
+        <input
+          matInput
+          formControlName="cylinderCapacity"
+          type="number"
+          autocomplete="off"
+        />
+        <mat-error *ngIf="cylinderCapacity?.hasError('maxlength')">
+          Az hengerűrtartalom maximum 4 karakter hosszúságú.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-control" appearance="fill">
+        <mat-label>Teljesítmény (LE)</mat-label>
+        <input
+          matInput
+          formControlName="power"
+          type="number"
+          autocomplete="off"
+        />
+        <mat-error *ngIf="power?.hasError('maxlength')">
+          Az teljesítmény maximum 4 karakter hosszúságú.
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </ng-container>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Mégse</button>
+  <button
+    *ngIf="hasPermission"
+    mat-button
+    color="primary"
+    (click)="onSubmit()"
+    [disabled]="!form.valid"
+    cdkFocusInitial
+  >
+    Mentés
+  </button>
+</div>

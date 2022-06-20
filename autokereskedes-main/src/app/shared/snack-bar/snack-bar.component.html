@@ -1,0 +1,8 @@
+<div class="snack-bar-title">
+  <mat-icon *ngIf="data.status === success">check_circle_outline</mat-icon>
+  <mat-icon *ngIf="data.status === failed">error_outline</mat-icon>
+  <h1>{{ data.title }}</h1>
+</div>
+<span class="snack-bar-content">
+  {{ data.content }}
+</span>

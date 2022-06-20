@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>Profilom</h1>
+<form
+  class="form"
+  mat-dialog-content
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+>
+  <mat-form-field class="form-control">
+    <mat-label>Név</mat-label>
+    <input
+      matInput
+      formControlName="displayName"
+      type="text"
+      autocomplete="off"
+      required
+    />
+    <mat-error *ngIf="displayName?.hasError('required')">
+      Kötelező mező.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="form-control">
+    <mat-label>Telefonszám</mat-label>
+    <input
+      matInput
+      formControlName="phoneNumber"
+      type="text"
+      autocomplete="off"
+      required
+    />
+    <mat-error *ngIf="phoneNumber?.hasError('required')">
+      Kötelező mező.
+    </mat-error>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Mégse</button>
+  <button mat-button color="primary" (click)="onSubmit()" [disabled]="!form.valid">
+    Mentés
+  </button>
+</div>

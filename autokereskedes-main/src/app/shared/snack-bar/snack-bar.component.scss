@@ -1,0 +1,22 @@
+.snack-bar-title {
+  display: flex;
+  color: #fff;
+}
+
+.snack-bar-content {
+  font-size: 15px;
+  color: #fff;
+}
+
+mat-icon {
+  font-size: 30px;
+  margin-right: 10px;
+}
+
+::ng-deep .error {
+  background-color: #FF5733;
+}
+
+::ng-deep .success {
+  background-color: #00C90E;
+}
